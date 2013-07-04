@@ -1,0 +1,9 @@
+<form ng-submit="addUser()">
+	<input placeholder="Name" data-ng-model="newUserName" type="text" name="newUserName" id="newUserName">
+	<input placeholder="Age" data-ng-model="newUserAge" type="text" name="newUserAge" id="newUserAge">
+	<input type="submit" value="Add user">
+</form>
+<ul>
+	<li data-ng-repeat="user in users | orderBy:'age'"><a data-ng-click="removeUser(user)">X</a> {{ user.name }} - {{ user.age }}</li>
+</ul>
+<a href="/#">Go Back</a>
