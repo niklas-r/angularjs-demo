@@ -1,76 +1,59 @@
 /*global angular*/
 (function (){
-  var app = angular.module('app', ['app.homeController']),
-      users = [],
-      controllers = {},
-      factories = {};
+  var app = angular.module('app', [
+    'app.homeCtrl',
+    'app.aboutCtrl',
+    'app.calculatorCtrl',
+    'services.mainNavigation',
+    'services.pages'
+  ]);
 
-  app.config(function($routeProvider) {
+  /**
+   * App config
+   *  
+   */
+
+  app.config(function ($routeProvider, $locationProvider) {
+    /**
+     * App routing
+     *
+     * Child routes are configured in its parent module
+     * 
+     */
     $routeProvider
-      .when('/', {
-        controller: 'homeController',
-        templateUrl: '/partials/index.html'
-      })
-      .when('/users', {
-        controller: 'usersController',
-        templateUrl: '/partials/userList.html'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
+    .when('/', {
+      templateUrl: 'app/home/home.tpl.html',
+      controller: 'homeCtrl'
+    })
+    .when('/calculator', {
+      templateUrl: 'app/calculator/calculator.tpl.html',
+      controller: 'calculatorCtrl'
+    })
+    .when('/about', {
+      templateUrl: 'app/about/about.tpl.html',
+      controller: 'aboutCtrl'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
   });
 
-  factories.userFactory = function () {
-    var factory = {},
-        users = [];
+  /**
+   *  App controllers
+   *  
+   */
 
-    users = [
-      { id: 0, name: "Niklas", age: 24},
-      { id: 1, name: "Tom", age: 20},
-      { id: 2, name: "Stina", age: 19}
-    ];
+  app.controller('appCtrl', function ($scope, $location, $routeParams, mainNavigation, pages) {
 
-    factory.getUsers = function () {
-      return users;
-    };
+    $scope.mainNavLinks = mainNavigation.getLinks(pages.getPages());
 
-    factory.delUser = function () {
-      console.log("Delete user");
-    };
+    // Update activePage on successfull route change,
+    // essentially updating the main navigation
+    $scope.$on('$routeChangeSuccess', function () {
+      pages.setActivePage($location);
 
-    return factory;
-  };
-
-  controllers.usersController = function ($scope, userFactory) {
-    $scope.users = [];
-
-    var init = function () {
-      $scope.users = userFactory.getUsers();
-    };
-    init();
-
-    $scope.addUser = function () {
-      $scope.users.push({
-        id: $scope.users.length - 1,
-        name: $scope.newUserName,
-        age: $scope.newUserAge
-      });
-
-      $scope.newUserName = '';
-      $scope.newUserAge = '';
-    };
-
-    $scope.removeUser = function (user) {
-      var id = user.id;
-
-      angular.forEach($scope.users, function (person) {
-        if (id == person.id) {
-          $scope.users.splice(id, 1);
-        }
-      });
-    };
-  };
-  
-  app.factory(factories);
-  app.controller(controllers);
+      $scope.activeTopPath = mainNavigation.getActiveTopPath();
+      $scope.activePage = pages.getActivePage();
+    });
+  });
 }());
