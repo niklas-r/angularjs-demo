@@ -17,7 +17,9 @@ app.factory('mainNavigation', [
       var mainNavLinks = [];
 
       for (var i = 0; i < allPages.length; i++) {
-        if (allPages[i].parentId === "") {
+        var pageDepth = pages.getPageDepth(allPages[i].id);
+
+        if (pageDepth === 1) {
           mainNavLinks.push(allPages[i]);
         }
       }
@@ -53,13 +55,7 @@ app.factory("subNavigation", [
     var factory = {};
 
     factory.getChildPages = function (parentPage) {
-      var childPages = [];
-
-      angular.forEach(parentPage.childIds, function(childId){
-        var childPage  = pages.getPageById(childId);
-
-        childPages.push(childPage);
-      });
+      var childPages = pages.getChildPagesById(parentPage.id);
 
       return childPages;
     };
