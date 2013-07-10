@@ -1,4 +1,5 @@
-angular.module('app.householdCtrl', []).controller('householdCtrl', ['$scope', function ($scope) {
+angular.module('app.householdCtrl', [])
+.controller('householdCtrl', ['$scope', function ($scope) {
   var _people, cutPerson, pastePerson, Person, defaultPerson;
 
   // Array for storing removed people

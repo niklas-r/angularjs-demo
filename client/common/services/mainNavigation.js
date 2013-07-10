@@ -1,24 +1,31 @@
-angular.module('services.mainNavigation', []);
-angular.module('services.mainNavigation').factory('mainNavigation', function ($location) {
-  var factory = {};
+angular.module('services.mainNavigation', [
+  'services.pages'
+])
+.factory('mainNavigation', [
+  '$location',
+  'pages',
+  function ($location, pages) {
+    var factory = {},
+        allPages = pages.getPages();
 
-  factory.getLinks = function (pages) {
-    var mainNavLinks = [];
+    factory.getLinks = function () {
+      var mainNavLinks = [];
 
-    for (var i = 0; i < pages.length; i++) {
-      if (pages[i].parentId === "") {
-        mainNavLinks.push(pages[i]);
+      for (var i = 0; i < allPages.length; i++) {
+        if (allPages[i].parentId === "") {
+          mainNavLinks.push(allPages[i]);
+        }
       }
-    }
 
-    return mainNavLinks;
-  };
+      return mainNavLinks;
+    };
 
-  factory.getActiveTopPath = function () {
-    var currentTopPath = $location.path().match(/\/[a-zA-Z0-9-_]*/)[0];
+    factory.getActiveTopPath = function () {
+      var currentTopPath = $location.path().match(/\/[a-zA-Z0-9-_]*/)[0];
 
-    return currentTopPath;
-  };
+      return currentTopPath;
+    };
 
-  return factory;
-});
+    return factory;
+  }
+]);

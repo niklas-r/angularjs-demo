@@ -1,3 +1,7 @@
-angular.module('app.homeCtrl', []).controller('homeCtrl', function ($scope){
-  // Do something
-});
+angular.module('app.homeCtrl', [])
+.controller('homeCtrl', [
+  '$scope',
+  function ($scope){
+    // Do something
+  }
+]);
