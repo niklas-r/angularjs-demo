@@ -1,5 +1,5 @@
 <p>Här fyller du i uppgifter om ditt hushåll, till exempel hur många som bor i hushållet, samt deras ålder. Beräkningar på andra blad i kalkylen kan förändras beroende på de uppgifter som fylls i här. Klicka på frågetecknen för att få mer information om de olika posterna.</p>
-<form name="householdForm" class="horizontal form-inline-input" novalidate>
+<form name="householdForm" class="form-horizontal form-inline-input" novalidate>
 	<div class="row">
 		<div class="col col-lg-3">
 			<label>Kommun</label>
@@ -26,34 +26,47 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col col-lg-3">
-			<p>Labels</p>
-		</div>
-		<div class="col col-lg-9">
+		<div class="well col-lg-12">
 			<div class="row">
-				<input type="hidden" name="people" ng-model="household.people">
-				<div class="col col-lg-{{12 / household.peopleLength}}" ng-repeat="person in household.people">
-					<h4>{{person.name}}</h4>
-					<div class="control-group" ng-class="{'has-error': householdForm.name.$invalid}">
-						<div class="controls">
-							<input type="text" class="input-with-feedback" name="name" ng-model="person.name" required>						
+				<div class="col col-lg-3" ng-repeat="person in household.people">
+					<div ng-form="personForm">
+						<h4 class="top-heading">Person {{$index + 1}} <span ng-show="person.firstName">–</span> <span class="coherent-string">{{person.firstName}} {{person.lastName}}</span></h4>
+						<div class="control-group" ng-class="{'has-error': personForm.firstName.$dirty && personForm.firstName.$invalid, 'has-success': personForm.firstName.$valid}">
+							<div class="controls">
+								<label for="name" class="control-label">Förnamn:</label>
+								<input type="text" class="input-with-feedback" name="firstName" ng-model="person.firstName" ng-minlength="2" required>	
+								<label class="control-label" for="name" ng-show="personForm.firstName.$dirty && personForm.firstName.$error.required">Var god fyll i ditt förnamn.</label>
+								<label class="control-label" for="name" ng-show="personForm.firstName.$dirty && personForm.firstName.$error.minlength">Ditt förnamn är för kort.</label>
+							</div>
 						</div>
-						<label class="control-label" for="name" ng-show="householdForm.name.$error.required">Namn är obligatoriskt.</label>
+						<div class="control-group" ng-class="{'has-error': personForm.lastName.$dirty && personForm.lastName.$invalid, 'has-success': personForm.lastName.$valid}">
+							<div class="controls">
+								<label for="name" class="control-label">Efternamn:</label>
+								<input type="text" class="input-with-feedback" name="lastName" ng-model="person.lastName" ng-minlength="2" required>	
+								<label class="control-label" for="name" ng-show="personForm.lastName.$dirty && personForm.lastName.$error.required">Var god fyll i ditt efternamn</label>
+								<label class="control-label" for="name" ng-show="personForm.lastName.$dirty && personForm.lastName.$error.minlength">Ditt efternamn är för kort.</label>
+							</div>
+						</div>
+						<label>Kön</label>
+						<select name="sex" id="sex" ng-model="person.sex">
+							<option value="male">Man</option>
+							<option value="female">Kvinna</option>
+						</select>
+						<div class="control-group" ng-class="{'has-error': personForm.birthYear.$dirty && personForm.birthYear.$invalid, 'has-success': personForm.birthYear.$valid}">
+							<div class="controls">
+								<label class="control-label">Födelseår</label>
+								<input type="text" name="birthYear" ng-model="person.birthYear" ng-maxlength="4" ng-app="string"-minlength="4" ng-pattern="/^((19|20)([0-9]{2}))*$/" required>
+								<label class="control-label" ng-show="personForm.birthYear.$dirty && personForm.birthYear.$error.minlength">Format: ÅÅÅÅ, t.ex 1989.</label>
+								<label class="control-label" ng-show="personForm.birthYear.$dirty && personForm.birthYear.$error.pattern">Endast siffror är tillåtna.</label>
+							</div>
+						</div>
 					</div>
-					<select name="sex" id="sex" ng-model="person.sex">
-						<option value="male">Man</option>
-						<option value="female">Kvinna</option>
-					</select>
-					<input type="text" name="birthYear" ng-model="person.birthYear" ng-maxlength="4" ng-minlength="4" ng-pattern="/^[0-9]*$/" required>
-					<p ng-show="householdForm.birthYear.$error.minlength">Födelseår består av fyra siffor, t.ex 1989.</p>
-					<p ng-show="householdForm.birthYear.$error.pattern">Endast siffror är tillåtna.</p>
 				</div>
+				<input type="hidden" name="people" ng-model="household.people">
 			</div>
 		</div>
 	</div>
 </form>
-<div class="row">
-	<div class="col col-lg-12">
-		<pre>{{household | json}}</pre>
-	</div>
-</div>
+
+<br><br>
+<pre>{{household | json}}</pre>

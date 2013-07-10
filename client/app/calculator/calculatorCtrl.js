@@ -9,5 +9,5 @@ angular.module('app.calculatorCtrl', [
   });
 })
 .controller('calculatorCtrl', function ($scope) {
-
+  // Do something
 });

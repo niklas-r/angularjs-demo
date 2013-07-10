@@ -6,8 +6,10 @@ angular.module('app.householdCtrl', []).controller('householdCtrl', ['$scope', f
 
   // Person Construct
   Person = {
-    name: "Namn",
-    sex: "male"
+    firstName: "",
+    lastName: "",
+    sex: "male",
+    birthYear: ""
   };
 
   //Defaults
@@ -29,11 +31,12 @@ angular.module('app.householdCtrl', []).controller('householdCtrl', ['$scope', f
     // value form model
     if (len < value) {
 
-      // append as many as necessary
+      // append as many new persons as necessary
       while(len < value) {
         var person = {};
 
-        // check for stored people
+        // check for stored people, use the "old"
+        // people to populate array before creating new people
         if (_people.length === 0) {
           // append new person
           person = angular.extend({}, Person);
@@ -49,6 +52,10 @@ angular.module('app.householdCtrl', []).controller('householdCtrl', ['$scope', f
       }
 
     } else {
+
+      // store people in private array in case we want to re-add
+      // them later. by doing this the data will be saved and the
+      // user doesn't have to add it again
       var peopleToRemove = $scope.household.people.splice(value, len);
 
       angular.forEach(peopleToRemove, function(personToRemove){

@@ -56,14 +56,4 @@
       $scope.activePage = pages.getActivePage();
     });
   });
-
-  app.filter('range', function () {
-    return function (input, total) {
-      var total = parseInt(total, 10);
-      for (var i = 0; i < total; i++) {
-        input.push(i);
-      }
-      return input;
-    }
-  });
 }());
