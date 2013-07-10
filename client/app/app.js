@@ -62,9 +62,11 @@
       // essentially updating the main navigation
       $scope.$on('$routeChangeSuccess', function () {
         pages.setActivePage($location);
-
-        $scope.activeTopPath = mainNavigation.getActiveTopPath();
         $scope.activePage = pages.getActivePage();
+
+        $scope.activePageSection = mainNavigation.getActivePageSetion();
+
+        $scope.subNavLinks = subNavigation.getChildPages($scope.activePageSection);
       });
     }
   ]);

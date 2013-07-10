@@ -25,10 +25,17 @@ app.factory('mainNavigation', [
       return mainNavLinks;
     };
 
-    factory.getActiveTopPath = function () {
-      var currentTopPath = $location.path().match(/\/[a-zA-Z0-9-_]*/)[0];
+    factory.getActivePageSetion = function () {
+      var currentTopPath = $location.path().match(/\/[a-zA-Z0-9-_]*/)[0],
+          activePageSection = "";
 
-      return currentTopPath;
+      angular.forEach(allPages, function(page){
+        if (page.href === currentTopPath) {
+          activePageSection = page;
+        }
+      });
+
+      return activePageSection;
     };
 
     return factory;
@@ -43,11 +50,19 @@ app.factory("subNavigation", [
   'pages',
   '$routeParams',
   function (pages) {
-    var factory = {}, _activePage;
+    var factory = {};
 
-    // scope.$on('$routeChangeSuccess', function () {
-    //   _activePage = pages.getActivePage();
-    // });
+    factory.getChildPages = function (parentPage) {
+      var childPages = [];
+
+      angular.forEach(parentPage.childIds, function(childId){
+        var childPage  = pages.getPageById(childId);
+
+        childPages.push(childPage);
+      });
+
+      return childPages;
+    };
 
     return factory;
   }

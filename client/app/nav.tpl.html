@@ -2,18 +2,16 @@
 	<div class="container">
 		<a href="#/" class="navbar-brand">Bank</a>
 		<ul class="nav navbar-nav">
-			<li ng-repeat="link in mainNavLinks" ng-class="{'active': link.href == activeTopPath}">
+			<li ng-repeat="link in mainNavLinks" ng-class="{'active': link.href == activePageSection.href}">
 				<a href="#{{ link.href }}">{{ link.title }}</a>
 			</li>
 		</ul>
 	</div>
 </div>
-<div class="navbar subnav">
-	<div class="container">
-		<ul class="nav navbar-nav">
-			<li ng-repeat="link in subNavLinks">
-				<a href="#{{link.href}}">{{link-title}}</a>
-			</li>
-		</ul>
-	</div>
+<div ng-show="subNavLinks" class="container">
+	<ul class="nav nav-tabs">
+		<li ng-repeat="link in subNavLinks" ng-class="{'active': link.href == activePage.href}">
+			<a href="#{{ link.href }}">{{ link.title }}</a>
+		</li>
+	</ul>
 </div>

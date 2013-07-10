@@ -38,10 +38,23 @@ angular.module('services.pages', [])
     return pageStructure;
   };
 
-  factory.setActivePage = function ($location) {
-    var links = factory.getPages();
+  factory.getPageById = function (id) {
+    var pages = factory.getPages(),
+        page = "";
 
-    links.forEach(function (link) {
+    angular.forEach(pages, function(currentPage){
+      if (currentPage.id === id) {
+        page = currentPage;
+      }
+    });
+
+    return page;
+  };
+
+  factory.setActivePage = function ($location) {
+    var pages = factory.getPages();
+
+    pages.forEach(function (link) {
 
       if (link.href === $location.path()) {
         activePage = link;
