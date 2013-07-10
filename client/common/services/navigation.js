@@ -1,7 +1,12 @@
-angular.module('services.mainNavigation', [
+var app = angular.module('services.navigation', [
   'services.pages'
-])
-.factory('mainNavigation', [
+]);
+
+// **********************
+// Main Navigation
+// **********************
+
+app.factory('mainNavigation', [
   '$location',
   'pages',
   function ($location, pages) {
@@ -25,6 +30,24 @@ angular.module('services.mainNavigation', [
 
       return currentTopPath;
     };
+
+    return factory;
+  }
+]);
+
+// **********************
+// Sub Navigation
+// **********************
+
+app.factory("subNavigation", [
+  'pages',
+  '$routeParams',
+  function (pages) {
+    var factory = {}, _activePage;
+
+    // scope.$on('$routeChangeSuccess', function () {
+    //   _activePage = pages.getActivePage();
+    // });
 
     return factory;
   }

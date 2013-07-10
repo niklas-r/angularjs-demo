@@ -4,7 +4,7 @@
     'app.homeCtrl',
     'app.aboutCtrl',
     'app.calculatorCtrl',
-    'services.mainNavigation',
+    'services.navigation',
     'services.pages'
   ]);
 
