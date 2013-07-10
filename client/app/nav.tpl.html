@@ -1,0 +1,10 @@
+<div class="navbar">
+	<div class="container">
+		<a href="#/" class="navbar-brand">Bank</a>
+		<ul class="nav navbar-nav">
+			<li ng-repeat="link in mainNavLinks" ng-class="{'active': link.href == activeTopPath}">
+				<a href="#{{ link.href }}">{{ link.title }}</a>
+			</li>
+		</ul>
+	</div>
+</div>
