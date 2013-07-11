@@ -1,5 +1,7 @@
-angular.module('app.householdCtrl', [])
-.controller('householdCtrl', ['$scope', function ($scope) {
+angular.module('app.householdCtrl', [
+  'services.taxes'
+])
+.controller('householdCtrl', ['$scope', 'taxes', function ($scope, taxes) {
   var _people, cutPerson, pastePerson, Person, defaultPerson;
 
   // Array for storing removed people
@@ -66,5 +68,7 @@ angular.module('app.householdCtrl', [])
 
     console.log($scope.householdForm);
   };
+
+  taxes.getTaxList();
 
 }]);
