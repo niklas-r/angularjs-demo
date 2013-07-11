@@ -29,6 +29,9 @@ angular.module('app.calculatorCtrl', [
 .controller('calculatorCtrl', [
   '$scope',
   function ($scope) {
-    // Do something
+    
+    $scope.saveFormStep = function (model) {
+
+    };
   }
 ]);
