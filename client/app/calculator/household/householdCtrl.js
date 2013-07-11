@@ -1,8 +1,9 @@
 angular.module('app.householdCtrl', [
-  'services.taxes'
+  'services.taxes',
+  'services.calculatorStorage'
 ])
-.controller('householdCtrl', ['$scope', 'taxes', function ($scope, taxes) {
-  var _people, cutPerson, pastePerson, Person, defaultPerson, taxList, personTax;
+.controller('householdCtrl', ['$scope', 'taxes', 'calculatorStorage', function ($scope, taxes, calculatorStorage) {
+  var _people, cutPerson, pastePerson, Person, defaultPerson, taxList, personTax, previousData;
 
   // Array for storing removed people
   _people = [];
@@ -22,11 +23,18 @@ angular.module('app.householdCtrl', [
   //Defaults
   defaultPerson = angular.extend({}, Person);
 
-  $scope.household = {
-    county: $scope.taxList[0].id,
-    peopleLength: 1,
-    people: [defaultPerson]
-  };
+  previousData = calculatorStorage.getStoredData("household");
+
+  // check if we have old data from "server"
+  if (previousData) {
+    $scope.household = previousData.data;
+  } else {
+    $scope.household = {
+      county: $scope.taxList[0].id,
+      peopleLength: 1,
+      people: [defaultPerson]
+    };
+  }
 
   $scope.updateTax = function (action) {
     var churchFee = "",
@@ -97,6 +105,15 @@ angular.module('app.householdCtrl', [
         _people.push(personToRemove);
       });
     }
+  };
+
+  $scope.storeData = function (data) {
+    var dataToStore = {
+      name: "household",
+      data: data
+    };
+
+    calculatorStorage.addDataToStorage(dataToStore);
   };
 
   taxes.getTaxList();

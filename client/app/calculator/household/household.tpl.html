@@ -5,7 +5,7 @@
 			<label>Kommun</label>
 		</div>
 		<div class="col col-lg-9">
-			<select name="county" id="county" ng-model="household.county" class="col-lg-6" ng-options="tax.id as tax.name for tax in taxList" ng-change="updateTax()"></select>
+			<select name="county" id="county" ng-model="household.county" class="col-lg-6" ng-options="tax.id as tax.name for tax in taxList" ng-change="updateTax()" required></select>
 		</div>
 	</div>
 	<div class="row">
@@ -65,10 +65,11 @@
 									</select>
 								</div>
 							</div>
-							<div class="control-group">
+							<div class="control-group" ng-class="{'has-error': personForm.tax.$dirty && personForm.tax.$invalid, 'has-success': personForm.tax.$dirty && personForm.tax.$valid}">
 								<div class="controls">
 									<label class="control-label">Kommunalskatt</label>
-									<input type="text" name="tax" id="tax" ng-model="person.tax">
+									<input type="text" name="tax" id="tax" ng-model="person.tax" required>
+									<label class="control-label" ng-show="personForm.tax.$dirty && personForm.tax.$error.pattern">Skatt är obligatoriskt.</label>
 								</div>
 							</div>
 						</div>
@@ -81,6 +82,6 @@
 </form>
 <div class="row">
 	<div class="col col-lg-12">
-		<a href="#/calculator/income" class="btn btn-primary btn-large pull-right" ng-click="$parentScope.saveFormStep(household)">Nästa steg</a>	
+		<a href="#/calculator/income" class="btn btn-primary btn-large pull-right" ng-disabled="householdForm.$invalid" ng-click="storeData(household)">Nästa steg</a>	
 	</div>
 </div>
