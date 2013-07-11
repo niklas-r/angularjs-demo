@@ -68,8 +68,7 @@
 
         $scope.subNavLinks = subNavigation.getChildPages($scope.activePageSection);
 
-        // TODO write this function
-        pages.getParentPageById();
+        console.log(pages.getChildPagesById($scope.activePage.id));
       });
     }
   ]);
