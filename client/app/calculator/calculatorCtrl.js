@@ -23,15 +23,12 @@ angular.module('app.calculatorCtrl', [
     .when('/calculator/result', {
       templateUrl: 'app/calculator/result/result.tpl.html',
       controller: 'resultCtrl'
-    })
+    });
   }
 ])
 .controller('calculatorCtrl', [
   '$scope',
   function ($scope) {
-    
-    $scope.saveFormStep = function (model) {
-
-    };
+    // Do something
   }
 ]);
