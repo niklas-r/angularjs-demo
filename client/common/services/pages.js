@@ -69,10 +69,22 @@ angular.module('services.pages', [])
     }
   ];
 
+  /**
+   * Get relationship data between pages
+   *
+   * @return {array} Array containing objects with relationship information
+   */
   getPageRelations = function () {
     return pageRelations;
   };
 
+  /**
+   * Get relationship data about a page by it's ID
+   *
+   * @param  {int} pageId Id of the page you want to get relationship data from
+   *
+   * @return {object}     Object containing relationship data
+   */
   getPageRelationshipById = function (pageId) {
     var relPages = getPageRelations(),
         relPage = "";
@@ -86,6 +98,13 @@ angular.module('services.pages', [])
     return relPage;
   };
 
+  /**
+   * Get page data base on relationship
+   *
+   * @param  {obj|int} rel Either an object returned from 'getPageRelationshipById' or a relationship ID
+   *
+   * @return {object}      Page object
+   */
   getPageByRelationship = function (rel) {
     var relPages = getPageRelations(),
         relPage = "",
@@ -118,6 +137,16 @@ angular.module('services.pages', [])
     return page;
   };
 
+  /**
+   * Get parent page
+   *
+   * @param  {int}  childId ID of the page which you want to know the parent of
+   * @param  {bool} deep    Tells function if it should keep on traversing
+   *                        until there are no more parents. Will return array
+   *                        if true.
+   *
+   * @return {object|array} Page object or array containing multipl page objects
+   */
   factory.getParentPageById = function (childId, deep) {
     var relations = getPageRelations(),
         allPages = factory.getPages(),
@@ -150,6 +179,13 @@ angular.module('services.pages', [])
     }
   };
 
+  /**
+   * Get child pages by page ID. Only goes one child level deep.
+   *
+   * @param  {int} parentId ID of the page which you want to know the children of.
+   *
+   * @return {array}        Array of child page objects
+   */
   factory.getChildPagesById = function (parentId) {
     var relations = getPageRelations(),
         allPages = factory.getPages(),
@@ -200,10 +236,22 @@ angular.module('services.pages', [])
     return brokenString.length;
   };
 
+  /**
+   * Get all pages
+   *
+   * @return {array} All the pages
+   */
   factory.getPages = function () {
     return pageStructure;
   };
 
+  /**
+   * Get page by ID
+   *
+   * @param  {int} id Id of page to get
+   *
+   * @return {object} Page object
+   */
   factory.getPageById = function (id) {
     var pages = factory.getPages(),
         page = "";
@@ -217,6 +265,13 @@ angular.module('services.pages', [])
     return page;
   };
 
+  /**
+   * Sets the active page
+   *
+   * @param  {angular.$location} $location Instance of angulars $location service.
+   *
+   * @return {object}            Page object
+   */
   factory.setActivePage = function ($location) {
     var pages = factory.getPages();
 
@@ -230,6 +285,11 @@ angular.module('services.pages', [])
     return activePage;
   };
 
+  /**
+   * Get active page
+   *
+   * @return {object} Active page object
+   */
   factory.getActivePage = function () {
     return activePage;
   };
