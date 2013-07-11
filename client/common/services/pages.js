@@ -2,6 +2,9 @@ angular.module('services.pages', [])
 .factory('pages', function () {
   var factory = {},
       activePage = "",
+      getPageRelations,
+      getPageRelationshipById,
+      getPageByRelationship,
       pageStructure = [],
       pageRelations = [];
 
@@ -66,24 +69,89 @@ angular.module('services.pages', [])
     }
   ];
 
-  factory.getParentPageById = function (childId) {
-    var relations = pageRelations,
-        relParentPage = {},
-        parentPage = {};
+  getPageRelations = function () {
+    return pageRelations;
+  };
 
-    childId = 5;
+  getPageRelationshipById = function (pageId) {
+    var relPages = getPageRelations(),
+        relPage = "";
 
-    console.log("Write me");
-
-    for (var i = 0; i < relations.length; i++) {
-      // console.log(relations[i]);
+    for (var i = 0; i < relPages.length; i++) {
+      if (relPages[i].childPageId === pageId) {
+        relPage = relPages[i];
+      }
     }
 
-    return parentPage;
+    return relPage;
+  };
+
+  getPageByRelationship = function (rel) {
+    var relPages = getPageRelations(),
+        relPage = "",
+        allPages = factory.getPages(),
+        page = "",
+        relId = "";
+
+    if (angular.isNumber(rel)) {
+      relId = rel;
+    } else if (angular.isObject(rel) && angular.isNumber(rel.relId)) {
+      relId = rel.relId;
+    } else {
+      throw new TypeError("getPageByRelationship: first param must be either relationship object of relationship ID");
+    }
+
+    for (var i = 0; i < relPages.length; i++) {
+      if (relId === relPages[i].relId) {
+        relPage = relPages[i];
+        break;
+      }
+    }
+
+    for (var index = 0; index < allPages.length; index++) {
+      if (relPage.parentPageId === allPages[index].id) {
+        page = allPages[index];
+        break;
+      }
+    }
+
+    return page;
+  };
+
+  factory.getParentPageById = function (childId, deep) {
+    var relations = getPageRelations(),
+        allPages = factory.getPages(),
+        relParentPage = {},
+        pageRel = "",
+        parentPage = "",
+        parentPages = [];
+
+    deep = !!deep;
+
+    pageRel = getPageRelationshipById(childId);
+
+    if (pageRel) {
+      parentPage = getPageByRelationship(pageRel.relId);
+    }
+
+    if (deep && parentPage) {
+      while (pageRel) {
+        parentPage = getPageByRelationship(pageRel);
+        parentPages.push(parentPage);
+        pageRel = getPageRelationshipById(parentPage.id);
+      }
+
+    }
+
+    if (deep && parentPages) {
+      return parentPages;
+    } else {
+      return parentPage;
+    }
   };
 
   factory.getChildPagesById = function (parentId) {
-    var relations = pageRelations,
+    var relations = getPageRelations(),
         allPages = factory.getPages(),
         childRelPages = [],
         childPages = [];
@@ -140,11 +208,11 @@ angular.module('services.pages', [])
     var pages = factory.getPages(),
         page = "";
 
-    angular.forEach(pages, function(currentPage){
-      if (currentPage.id === id) {
-        page = currentPage;
+    for (var i = 0; i < pages.length; i++) {
+      if (pages[i].id === id) {
+        page = pages[i];
       }
-    });
+    }
 
     return page;
   };
