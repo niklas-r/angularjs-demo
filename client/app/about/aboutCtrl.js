@@ -1,3 +1,7 @@
-angular.module('app.aboutCtrl', []).controller('aboutCtrl', function ($scope) {
-  // Do something
-});
+angular.module('app.aboutCtrl', [])
+.controller('aboutCtrl', [
+  '$scope',
+  function ($scope) {
+    // Do something
+  }
+]);

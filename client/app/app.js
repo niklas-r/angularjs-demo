@@ -4,7 +4,7 @@
     'app.homeCtrl',
     'app.aboutCtrl',
     'app.calculatorCtrl',
-    'services.mainNavigation',
+    'services.navigation',
     'services.pages'
   ]);
 
@@ -13,47 +13,61 @@
    *  
    */
 
-  app.config(function ($routeProvider, $locationProvider) {
-    /**
-     * App routing
-     *
-     * Child routes are configured in its parent module
-     * 
-     */
-    $routeProvider
-    .when('/', {
-      templateUrl: 'app/home/home.tpl.html',
-      controller: 'homeCtrl'
-    })
-    .when('/calculator', {
-      templateUrl: 'app/calculator/calculator.tpl.html',
-      controller: 'calculatorCtrl'
-    })
-    .when('/about', {
-      templateUrl: 'app/about/about.tpl.html',
-      controller: 'aboutCtrl'
-    })
-    .otherwise({
-      redirectTo: '/'
-    });
-  });
+  app.config([
+    '$routeProvider',
+    '$locationProvider',
+    function ($routeProvider, $locationProvider) {
+      /**
+       * App routing
+       *
+       * Child routes are configured in its parent module
+       * 
+       */
+      $routeProvider
+      .when('/', {
+        templateUrl: 'app/home/home.tpl.html',
+        controller: 'homeCtrl'
+      })
+      .when('/calculator', {
+        templateUrl: 'app/calculator/calculator.tpl.html',
+        controller: 'calculatorCtrl'
+      })
+      .when('/about', {
+        templateUrl: 'app/about/about.tpl.html',
+        controller: 'aboutCtrl'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+    }
+  ]);
 
   /**
    *  App controllers
    *  
    */
 
-  app.controller('appCtrl', function ($scope, $location, $routeParams, mainNavigation, pages) {
+  app.controller('appCtrl', [
+      '$scope',
+      '$location',
+      '$routeParams',
+      'mainNavigation',
+      'subNavigation',
+      'pages',
+      function ($scope, $location, $routeParams, mainNavigation, subNavigation, pages) {
 
-    $scope.mainNavLinks = mainNavigation.getLinks(pages.getPages());
+      $scope.mainNavLinks = mainNavigation.getLinks();
 
-    // Update activePage on successfull route change,
-    // essentially updating the main navigation
-    $scope.$on('$routeChangeSuccess', function () {
-      pages.setActivePage($location);
+      // Update activePage on successfull route change,
+      // essentially updating the main navigation
+      $scope.$on('$routeChangeSuccess', function () {
+        pages.setActivePage($location);
+        $scope.activePage = pages.getActivePage();
 
-      $scope.activeTopPath = mainNavigation.getActiveTopPath();
-      $scope.activePage = pages.getActivePage();
-    });
-  });
+        $scope.activePageSection = mainNavigation.getActivePageSetion();
+
+        $scope.subNavLinks = subNavigation.getChildPages($scope.activePageSection);
+      });
+    }
+  ]);
 }());

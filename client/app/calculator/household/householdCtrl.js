@@ -1,24 +1,64 @@
-angular.module('app.householdCtrl', []).controller('householdCtrl', ['$scope', function ($scope) {
-  var _people, cutPerson, pastePerson, Person, defaultPerson;
+angular.module('app.householdCtrl', [
+  'services.taxes',
+  'services.calculatorStorage'
+])
+.controller('householdCtrl', ['$scope', 'taxes', 'calculatorStorage', function ($scope, taxes, calculatorStorage) {
+  var _people, cutPerson, pastePerson, Person, defaultPerson, taxList, personTax, previousData;
 
   // Array for storing removed people
   _people = [];
+
+  $scope.taxList = taxes.getTaxList();
 
   // Person Construct
   Person = {
     firstName: "",
     lastName: "",
     sex: "male",
-    birthYear: ""
+    birthYear: "",
+    churchFee: "true",
+    tax: $scope.taxList[0].churchTax
   };
 
   //Defaults
   defaultPerson = angular.extend({}, Person);
 
-  $scope.household = {
-    county: "Tyresö",
-    peopleLength: 1,
-    people: [defaultPerson]
+  previousData = calculatorStorage.getStoredData("household");
+
+  // check if we have old data from "server"
+  if (previousData) {
+    $scope.household = previousData.data;
+  } else {
+    $scope.household = {
+      county: $scope.taxList[0].id,
+      peopleLength: 1,
+      people: [defaultPerson]
+    };
+  }
+
+  $scope.updateTax = function (action) {
+    var churchFee = "",
+        taxId = $scope.household.county,
+        taxObj = "";
+
+    for (var i = 0; i < $scope.taxList.length; i++) {
+      var taxItem = $scope.taxList[i];
+
+      if (taxId === taxItem.id) {
+        taxObj = taxItem;
+        break;
+      }
+    }
+
+    for (var index = 0; index < $scope.household.people.length; index++) {
+      var person = $scope.household.people[index];
+
+      if (person.churchFee === "true") {
+        person.tax = taxObj.churchTax;
+      } else {
+        person.tax = taxObj.tax;
+      }
+    }
   };
 
   $scope.updatePeople = function (value) {
@@ -39,7 +79,10 @@ angular.module('app.householdCtrl', []).controller('householdCtrl', ['$scope', f
         // people to populate array before creating new people
         if (_people.length === 0) {
           // append new person
-          person = angular.extend({}, Person);
+          person = angular.extend({
+            tax:$scope.taxList[$scope.household.county].churchTax
+          },Person);
+
         } else {
           // grab first object from _people and append 
           person = _people.splice(0, 1)[0];
@@ -62,8 +105,17 @@ angular.module('app.householdCtrl', []).controller('householdCtrl', ['$scope', f
         _people.push(personToRemove);
       });
     }
-
-    console.log($scope.householdForm);
   };
+
+  $scope.storeData = function (data) {
+    var dataToStore = {
+      name: "household",
+      data: data
+    };
+
+    calculatorStorage.addDataToStorage(dataToStore);
+  };
+
+  taxes.getTaxList();
 
 }]);
