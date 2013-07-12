@@ -6,6 +6,8 @@ angular.module('services.calculatorStorage', [])
 
   factory.addDataToStorage = function (dataToStore) {
     _storedData.push(dataToStore);
+
+    console.log(_storedData);
     return;
   };
 

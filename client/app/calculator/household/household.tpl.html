@@ -27,23 +27,24 @@
 				<div class="row">
 					<div class="col col-lg-3" ng-repeat="person in household.people">
 						<div ng-form="personForm">
+							<input type="hidden" name="id" ng-model="person.id">
 							<h4 class="top-heading">Person {{$index + 1}} <span ng-show="person.firstName">–</span> <span class="coherent-string">{{person.firstName}} {{person.lastName}}</span></h4>
 							<div class="control-group" ng-class="{'has-error': personForm.firstName.$dirty && personForm.firstName.$invalid, 'has-success': personForm.firstName.$valid}">
 								<div class="controls">
-									<label for="name" class="control-label">Förnamn:</label>
+									<label class="control-label">Förnamn:</label>
 									<input type="text" class="input-with-feedback" name="firstName" ng-pattern="/^[a-zA-Z]*$/" ng-model="person.firstName" ng-minlength="2" required>	
-									<label class="control-label" for="name" ng-show="personForm.firstName.$dirty && personForm.firstName.$error.required">Var god fyll i ditt förnamn.</label>
-									<label class="control-label" for="name" ng-show="personForm.firstName.$dirty && personForm.firstName.$error.minlength">Ditt förnamn är för kort.</label>
-									<label class="control-label" for="name" ng-show="personForm.firstName.$dirty && personForm.firstName.$error.pattern">Endast bokstäver är tillåtna.</label>
+									<label class="control-label" ng-show="personForm.firstName.$dirty && personForm.firstName.$error.required">Var god fyll i ditt förnamn.</label>
+									<label class="control-label" ng-show="personForm.firstName.$dirty && personForm.firstName.$error.minlength">Ditt förnamn är för kort.</label>
+									<label class="control-label" ng-show="personForm.firstName.$dirty && personForm.firstName.$error.pattern">Endast bokstäver är tillåtna.</label>
 								</div>
 							</div>
 							<div class="control-group" ng-class="{'has-error': personForm.lastName.$dirty && personForm.lastName.$invalid, 'has-success': personForm.lastName.$valid}">
 								<div class="controls">
-									<label for="name" class="control-label">Efternamn:</label>
+									<label class="control-label">Efternamn:</label>
 									<input type="text" class="input-with-feedback" name="lastName" ng-pattern="/^[a-zA-Z]*$/" ng-model="person.lastName" ng-minlength="2" required>	
-									<label class="control-label" for="name" ng-show="personForm.lastName.$dirty && personForm.lastName.$error.required">Var god fyll i ditt efternamn</label>
-									<label class="control-label" for="name" ng-show="personForm.lastName.$dirty && personForm.lastName.$error.minlength">Ditt efternamn är för kort.</label>
-									<label class="control-label" for="name" ng-show="personForm.lastName.$dirty && personForm.lastName.$error.pattern">Endast bokstäver är tillåtna.</label>
+									<label class="control-label" ng-show="personForm.lastName.$dirty && personForm.lastName.$error.required">Var god fyll i ditt efternamn</label>
+									<label class="control-label" ng-show="personForm.lastName.$dirty && personForm.lastName.$error.minlength">Ditt efternamn är för kort.</label>
+									<label class="control-label" ng-show="personForm.lastName.$dirty && personForm.lastName.$error.pattern">Endast bokstäver är tillåtna.</label>
 								</div>
 							</div>
 							<label>Kön</label>

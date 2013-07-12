@@ -21,7 +21,7 @@ angular.module('app.householdCtrl', [
   };
 
   //Defaults
-  defaultPerson = angular.extend({}, Person);
+  defaultPerson = angular.extend({id: 0}, Person);
 
   previousData = calculatorStorage.getStoredData("household");
 
@@ -80,8 +80,9 @@ angular.module('app.householdCtrl', [
         if (_people.length === 0) {
           // append new person
           person = angular.extend({
+            id : $scope.household.people.length,
             tax:$scope.taxList[$scope.household.county].churchTax
-          },Person);
+          }, Person);
 
         } else {
           // grab first object from _people and append 
@@ -109,8 +110,7 @@ angular.module('app.householdCtrl', [
 
   $scope.storeData = function (data) {
     var dataToStore = {
-      name: "household",
-      data: data
+      household: data
     };
 
     calculatorStorage.addDataToStorage(dataToStore);
