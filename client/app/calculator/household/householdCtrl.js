@@ -17,17 +17,15 @@ angular.module('app.householdCtrl', [
     sex: "male",
     birthYear: "",
     churchFee: "true",
-    tax: $scope.taxList[0].churchTax,
-    income : {
-      net: 0,
-      gross: 0,
-      taxPaid: 0
-    },
-    expenses : 0
+    tax: $scope.taxList[0].churchTax
   };
 
   //Defaults
-  defaultPerson = angular.extend({id: 0}, Person);
+  defaultPerson = angular.extend({
+    income: {},
+    expenses: {},
+    results: {}
+  }, Person);
 
   previousData = calculatorStorage.getStoredData("household");
 
@@ -86,8 +84,10 @@ angular.module('app.householdCtrl', [
         if (_people.length === 0) {
           // append new person
           person = angular.extend({
-            id : $scope.household.people.length,
-            tax:$scope.taxList[$scope.household.county].churchTax
+            income: {},
+            expenses: {},
+            results: {},
+            tax: $scope.taxList[$scope.household.county].churchTax
           }, Person);
 
         } else {

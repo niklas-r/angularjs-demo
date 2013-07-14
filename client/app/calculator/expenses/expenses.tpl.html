@@ -6,7 +6,7 @@
 	<p>Här fyller du i dina utgifter.</p>
 	<div class="row">
 		<div class="col col-lg-3">
-			<h4>Ange utkomster per månad</h4>
+			<h4>Ange utgifter per månad</h4>
 			<ul class="form-list	">
 				<li><h5 class="form-title">Boende</h5></li>
 				<li><h5 class="form-title">Bil</h5></li>
@@ -23,7 +23,7 @@
 							<!-- living input -->
 							<div class="control-group" ng-class="{'has-error': personForm.living.$dirty && personForm.living.$invalid, 'has-success': personForm.living.$dirty && personForm.living.$valid}">
 								<div class="controls">
-									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person.expenses, person.tax)" name="living" ng-model="person.expenses.living" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person)" name="living" ng-model="person.expenses.living" ng-pattern="/^[0-9]+$/" ng-minlength="1">
 									<label class="control-label" ng-show="personForm.living.$dirty && personForm.living.$error.pattern">Endast siffror är tillåtna.</label>
 								</div>
 							</div>
@@ -31,7 +31,7 @@
 							<!-- car input -->
 							<div class="control-group" ng-class="{'has-error': personForm.car.$dirty && personForm.car.$invalid, 'has-success': personForm.car.$dirty && personForm.car.$valid}">
 								<div class="controls">
-									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person.expenses, person.tax)" name="car" ng-model="person.expenses.car" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person)" name="car" ng-model="person.expenses.car" ng-pattern="/^[0-9]+$/" ng-minlength="1">
 									<label class="control-label" ng-show="personForm.car.$dirty && personForm.car.$error.pattern">Endast siffror är tillåtna.</label>
 								</div>
 							</div>
@@ -39,7 +39,7 @@
 							<!-- food input -->
 							<div class="control-group" ng-class="{'has-error': personForm.food.$dirty && personForm.food.$invalid, 'has-success': personForm.food.$dirty && personForm.food.$valid}">
 								<div class="controls">
-									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person.expenses, person.tax)" name="food" ng-model="person.expenses.food" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person)" name="food" ng-model="person.expenses.food" ng-pattern="/^[0-9]+$/" ng-minlength="1">
 									<label class="control-label" ng-show="personForm.food.$dirty && personForm.food.$error.pattern">Endast siffror är tillåtna.</label>
 								</div>
 							</div>
@@ -47,7 +47,7 @@
 							<!-- other input -->
 							<div class="control-group" ng-class="{'has-error': personForm.other.$dirty && personForm.other.$invalid, 'has-success': personForm.other.$dirty && personForm.other.$valid}">
 								<div class="controls">
-									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person.expenses, person.tax)" name="other" ng-model="person.expenses.other" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person)" name="other" ng-model="person.expenses.other" ng-pattern="/^[0-9]+$/" ng-minlength="1">
 									<label class="control-label" ng-show="personForm.other.$dirty && personForm.other.$error.pattern">Endast siffror är tillåtna.</label>
 								</div>
 							</div>
