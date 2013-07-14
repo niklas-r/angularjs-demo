@@ -7,7 +7,6 @@ angular.module('services.calculatorStorage', [])
   factory.addDataToStorage = function (dataToStore) {
     _storedData.push(dataToStore);
 
-    console.log(_storedData);
     return;
   };
 
@@ -19,7 +18,7 @@ angular.module('services.calculatorStorage', [])
     }
 
     for (var i = 0; i < _storedData.length; i++) {
-      if (_storedData[i].name === name) {
+      if (_storedData[i][name]) {
         storedData = _storedData[i];
       }
     }

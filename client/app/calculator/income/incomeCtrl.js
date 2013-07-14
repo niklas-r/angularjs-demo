@@ -7,7 +7,7 @@ angular.module('app.incomeCtrl', [
   'calculatorStorage',
   'currency',
   function ($scope, calculatorStorage, currency) {
-    var data, fakeData = {}, grossIncome, netIncome;
+    var data, fakeData = {};
 
   fakeData.household = {
     "county": 180,
@@ -52,39 +52,72 @@ angular.module('app.incomeCtrl', [
     ]
   };
 
-  data = calculatorStorage.getStoredData();
+  data = calculatorStorage.getStoredData("household");
 
-  // $scope.peopleData = data;
-  $scope.peopleData = fakeData; // for testing
+  $scope.peopleData = data;
+  // $scope.peopleData = fakeData; // for testing
 
-  $scope.updateIncome = function () {
-    var income = 0,
-        taxes = [];
-    angular.forEach($scope.peopleData.household.people, function(person){
-      if (person.income) {
-        for (var prop in person.income ) {
-          if (person.income.hasOwnProperty(prop)) {
-            var amount = parseInt(person.income[prop], 10);
-            amount = (isNaN(amount)) ? 0 : amount;
-            income += amount;
-          }
+  $scope.checkForData = function () {
+    return !!$scope.peopleData.household;
+  };
+
+  $scope.updateIncome = function (incomeObj, tax) {
+    var income = 0;
+    incomeObj.gross = 0;
+
+    for (var prop in incomeObj) {
+      if (incomeObj.hasOwnProperty(prop)) {
+        var value = parseInt(incomeObj[prop], 10);
+        var amount = 0;
+
+        if (!isNaN(value)) {
+          amount = value;
         }
+
+        income += amount;
       }
+    }
 
-      taxes.push(person.tax);
-    });
-
-    // update gross income
-    currency.updateIncome(income);
-
-    // update taxes
-    currency.updateTax(taxes);
-
-    // console.log(currency.get)
+    incomeObj.gross = income;
+    incomeObj.net = currency.calculateNetIncome(income, tax);
+    incomeObj.paidTax = parseFloat(incomeObj.gross - incomeObj.net).toFixed(2);
   };
 
   $scope.getColumnClass = function () {
     return "col-lg-" + 12 / $scope.peopleData.household.people.length;
+  };
+
+  $scope.getTotalGrossIncome = function () {
+    var people = $scope.peopleData.household.people,
+        grossIncome = 0;
+
+    angular.forEach(people, function(person){
+      grossIncome += person.income.gross;
+    });
+
+    return grossIncome;
+  };
+
+  $scope.getTotalNetIncome = function () {
+    var people = $scope.peopleData.household.people,
+        netIncome = 0;
+
+    angular.forEach(people, function(person){
+      netIncome += person.income.net;
+    });
+
+    return netIncome;
+  };
+
+  $scope.getTotalTaxPaid = function () {
+    var people = $scope.peopleData.household.people,
+        tax = 0;
+
+    angular.forEach(people, function(person){
+      tax += person.income.paidTax;
+    });
+
+    return tax;
   };
 
 }]);

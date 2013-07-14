@@ -1,8 +1,6 @@
 angular.module('services.currency', [])
 .factory('currency', function () {
-  var _income = 0,
-      _tax = 0,
-      _calculateTax;
+  var _calculateTax;
 
 
   /**
@@ -12,71 +10,29 @@ angular.module('services.currency', [])
    *
    * @return {float}     Tax amount
    */
-  _calculateTax = function (tax) {
-    console.log(tax);
-    var taxAmount = (tax * 100) / _income;
-    return taxAmount.toFixed(2);
+  _calculateTax = function (amount, tax) {
+    var taxAmount = (tax / 100) * amount;
+    return taxAmount;
   };
 
+
   return {
-
     /**
-     * Update the gross income
+     * Calculate net income from gross income
      *
-     * @param  {int} income Total gross income
+     * @param  {int} grossIncome Income amount
+     * @param  {float} tax       Tax percentage
      *
-     * @return {this}
+     * @return {float}           Net income
      */
-    updateIncome : function (income) {
-      _income = income;
-      return this;
-    },
+    calculateNetIncome: function (grossIncome, tax) {
+      var net = 0,
+          taxAmount = 0;
 
-    /**
-     * Update tax amount
-     *
-     * @param  {array} tax List of taxes per person
-     *
-     * @return {int} Total tax amount
-     */
-    updateTax : function (tax) {
-      // reset old tax val
-      _tax = 0;
-      for (var i = 0; i < tax.length; i++) {
-        _tax += parseFloat(_calculateTax(tax[i]));
-      }
-      console.log(_tax);
-      return this;
-    },
+      taxAmount = _calculateTax(grossIncome, tax);
+      net = grossIncome - taxAmount;
 
-    /**
-     * Get total tax amount
-     *
-     * @return {int} Tax amount
-     */
-    getTaxAmount : function () {
-      return _tax;
-    },
-
-    /**
-     * Get gross income
-     *
-     * @return {int} Gross income
-     */
-    getGrossIncome : function () {
-      return _income;
-    },
-
-    /**
-     * Get net income
-     *
-     * @return {int} Net income
-     */
-    getNetIncome : function () {
-      var tax = this.getTaxAmount(),
-          amount = this.getGrossIncome();
-
-      return amount - tax;
+      return net.toFixed(2);
     }
   };
 });

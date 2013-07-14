@@ -17,7 +17,13 @@ angular.module('app.householdCtrl', [
     sex: "male",
     birthYear: "",
     churchFee: "true",
-    tax: $scope.taxList[0].churchTax
+    tax: $scope.taxList[0].churchTax,
+    income : {
+      net: 0,
+      gross: 0,
+      taxPaid: 0
+    },
+    expenses : 0
   };
 
   //Defaults
@@ -27,7 +33,7 @@ angular.module('app.householdCtrl', [
 
   // check if we have old data from "server"
   if (previousData) {
-    $scope.household = previousData.data;
+    $scope.household = previousData.household;
   } else {
     $scope.household = {
       county: $scope.taxList[0].id,
