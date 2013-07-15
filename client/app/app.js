@@ -25,20 +25,22 @@
        */
       $routeProvider
       .when('/', {
-        templateUrl: 'app/home/home.tpl.html',
+        templateUrl: '/app/home/home.tpl.html',
         controller: 'homeCtrl'
       })
       .when('/calculator', {
-        templateUrl: 'app/calculator/calculator.tpl.html',
+        templateUrl: '/app/calculator/calculator.tpl.html',
         controller: 'calculatorCtrl'
       })
       .when('/about', {
-        templateUrl: 'app/about/about.tpl.html',
+        templateUrl: '/app/about/about.tpl.html',
         controller: 'aboutCtrl'
       })
       .otherwise({
         redirectTo: '/'
       });
+
+      $locationProvider.html5Mode(true);
     }
   ]);
 

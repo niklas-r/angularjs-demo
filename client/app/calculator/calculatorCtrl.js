@@ -9,19 +9,19 @@ angular.module('app.calculatorCtrl', [
   function ($routeProvider) {
     $routeProvider
     .when('/calculator/household', {
-      templateUrl: 'app/calculator/household/household.tpl.html',
+      templateUrl: '/app/calculator/household/household.tpl.html',
       controller: 'householdCtrl'
     })
     .when('/calculator/income', {
-      templateUrl: 'app/calculator/income/income.tpl.html',
+      templateUrl: '/app/calculator/income/income.tpl.html',
       controller: 'incomeCtrl'
     })
     .when('/calculator/expenses', {
-      templateUrl: 'app/calculator/expenses/expenses.tpl.html',
+      templateUrl: '/app/calculator/expenses/expenses.tpl.html',
       controller: 'expensesCtrl'
     })
     .when('/calculator/result', {
-      templateUrl: 'app/calculator/result/result.tpl.html',
+      templateUrl: '/app/calculator/result/result.tpl.html',
       controller: 'resultCtrl'
     });
   }
