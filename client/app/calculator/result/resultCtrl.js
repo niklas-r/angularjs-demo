@@ -7,8 +7,6 @@ angular.module('app.resultCtrl', [])
 
     data = calculatorStorage.getStoredData("household");
 
-    console.log(data);
-
     $scope.peopleData = data;
 
     $scope.checkForData = function () {

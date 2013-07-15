@@ -66,7 +66,6 @@ angular.module('app.householdCtrl', [
   };
 
   $scope.updatePeople = function (value) {
-
     var len = $scope.household.people.length;
 
     value = parseInt(value, 10);
