@@ -1,0 +1,24 @@
+framework: jasmine
+
+launch_in_dev:
+- chrome
+- firefox
+
+# testem will monitor these files for changes
+# and auto run tests on change
+src_files:
+- 'app/app.js'
+- 'app/**/*Ctrl.js'
+- 'common/**/*.js'
+- 'test/unit/**/*Spec.js'
+
+# these files will be served to the browser
+serve_files:
+- 'vendor/angular.js'
+- 'vendor/test/angular-mocks.js'
+- 'app/app.js'
+- 'app/**/*Ctrl.js'
+- 'common/**/*.js'
+- 'test/unit/**/*Spec.js'
+
+# unsafe_file_serving: true
