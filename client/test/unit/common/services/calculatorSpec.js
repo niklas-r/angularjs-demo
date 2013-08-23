@@ -1,19 +1,32 @@
 describe("Calculator storage service", function () {
-  var calc;
+  var calc, myData = {};
+
+  myData = {
+    "data" : {
+      bestAnimal: "dogs"
+    }
+  };
 
   beforeEach(module('services.calculatorStorage'));
 
-  beforeEach(inject(function(calculatorStorage) {
+  beforeEach(inject(function (calculatorStorage) {
     calc = calculatorStorage;
   }));
 
   it("should be able to save data", function () {
-    var data;
+    expect(calc.addDataToStorage).toThrow();
+    // have to wrap function call within an anonymous function
+    expect(function(){ calc.addDataToStorage(myData) }).not.toThrow();
+  });
 
-    calc.addDataToStorage({ testing: true });
 
-    data = calc.getStoredData("testing");
+  it("should be able to read data", function () {
+    var storedData;
 
-    expect(data.testing).toBe(true);
+    calc.addDataToStorage(myData);
+    storedData = calc.getStoredData("data");
+
+    expect(storedData.data).toBeDefined();
+    expect(storedData.data.bestAnimal).toBeDefined();
   });
 });
