@@ -18,7 +18,16 @@ angular.module('app.expensesCtrl', [
     };
 
     $scope.getColumnClass = function () {
-      return "col-lg-" + 12 / $scope.peopleData.household.people.length;
+      var pplLen,
+          colClass = "col-lg-12";
+
+      if ($scope.peopleData.hasOwnProperty("household") &&
+          $scope.peopleData.household.hasOwnProperty("people")) {
+        pplLen = $scope.peopleData.household.people.length;
+        colClass = "col-lg-" + (12 / pplLen);
+      }
+
+      return colClass;
     };
 
     $scope.updateExpenses = function (personObj) {
