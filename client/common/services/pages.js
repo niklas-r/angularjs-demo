@@ -21,7 +21,7 @@ angular.module('services.pages', [])
       id : 1,
     },
     {
-      title: "Om oss",
+      title: "Om denna demo",
       href: "/about",
       id : 2,
     },
