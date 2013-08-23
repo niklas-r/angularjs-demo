@@ -1,6 +1,6 @@
 {
-  "name": "application-name",
   "version": "0.1.2",
+  "name": "Budgetkalkylatorn",
   "private": true,
   "scripts": {
     "start": "nodemon server.js",
