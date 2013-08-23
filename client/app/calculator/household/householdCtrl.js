@@ -1,3 +1,4 @@
+'use strict';
 angular.module('app.householdCtrl', [
   'services.taxes',
   'services.calculatorStorage'
@@ -92,7 +93,7 @@ angular.module('app.householdCtrl', [
           }, Person);
 
         } else {
-          // grab first object from _people and append 
+          // grab first object from _people and append
           person = _people.splice(0, 1)[0];
         }
 

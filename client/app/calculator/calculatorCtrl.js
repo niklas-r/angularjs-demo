@@ -1,3 +1,4 @@
+'use strict';
 angular.module('app.calculatorCtrl', [
   'app.householdCtrl',
   'app.incomeCtrl',

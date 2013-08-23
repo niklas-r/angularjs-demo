@@ -1,3 +1,4 @@
+'use strict';
 describe("Taxes service", function () {
   var taxService;
 

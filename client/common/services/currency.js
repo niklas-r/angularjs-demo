@@ -1,3 +1,4 @@
+'use strict';
 angular.module('services.currency', [])
 .factory('currency', function () {
   var _calculateTax;

@@ -1,3 +1,4 @@
+'use strict';
 angular.module('services.pages', [])
 .factory('pages', function () {
   var factory = {},

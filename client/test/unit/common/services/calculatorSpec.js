@@ -1,3 +1,4 @@
+'use strict';
 describe("Calculator storage service", function () {
   var calc, myData = {};
 

@@ -1,3 +1,4 @@
+'use strict';
 angular.module('services.calculatorStorage', [])
 .factory('calculatorStorage', function () {
   var factory = {},

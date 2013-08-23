@@ -1,3 +1,4 @@
+'use strict';
 describe("Page service", function() {
   var pageService;
 
@@ -35,7 +36,7 @@ describe("Page service", function() {
     $location.path("/");
 
     pageService.setActivePage($location);
-    
+
     getActivePage = pageService.getActivePage();
 
     expect(getActivePage.title).toEqual("Hem");

@@ -1,3 +1,4 @@
+'use strict';
 describe("Household controller", function() {
   var scope, ctrl, taxes;
 

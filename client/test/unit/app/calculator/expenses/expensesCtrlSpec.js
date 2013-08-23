@@ -1,3 +1,4 @@
+'use strict';
 describe("Expenses controller", function() {
   var scope, calcStorageService, currencyService, ctrl;
 

@@ -1,3 +1,4 @@
+'use strict';
 describe("Currency service", function () {
   var currencyService;
 

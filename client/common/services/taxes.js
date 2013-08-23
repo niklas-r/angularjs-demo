@@ -1,3 +1,4 @@
+'use strict';
 angular.module('services.taxes', [])
 .factory('taxes', function () {
   var factory = {},
