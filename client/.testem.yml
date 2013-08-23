@@ -1,8 +1,9 @@
 framework: jasmine
 
 launch_in_dev:
-- chrome
-- firefox
+# - chrome
+# - firefox
+- phantomjs
 
 # testem will monitor these files for changes
 # and auto run tests on change
