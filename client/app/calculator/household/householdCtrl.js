@@ -5,42 +5,44 @@ angular.module('app.householdCtrl', [
 .controller('householdCtrl', ['$scope', 'taxes', 'calculatorStorage', function ($scope, taxes, calculatorStorage) {
   var _people, cutPerson, pastePerson, Person, defaultPerson, taxList, personTax, previousData;
 
-  // Array for storing removed people
-  _people = [];
+  $scope.init = function () {
+    // Array for storing removed people
+    _people = [];
 
-  $scope.taxList = taxes.getTaxList();
+    $scope.taxList = taxes.getTaxList();
 
-  // Person Construct
-  Person = {
-    firstName: "",
-    lastName: "",
-    sex: "male",
-    birthYear: "",
-    churchFee: "true",
-    tax: $scope.taxList[0].churchTax
+    // Person Construct
+    Person = {
+      firstName: "",
+      lastName: "",
+      sex: "male",
+      birthYear: "",
+      churchFee: "true",
+      tax: $scope.taxList[0].churchTax
+    };
+
+    //Defaults
+    defaultPerson = angular.extend({
+      income: {},
+      expenses: {},
+      results: {}
+    }, Person);
+
+    previousData = calculatorStorage.getStoredData("household");
+
+    // check if we have old data from "server"
+    if (previousData) {
+      $scope.household = previousData.household;
+    } else {
+      $scope.household = {
+        county: $scope.taxList[0].id,
+        peopleLength: 1,
+        people: [defaultPerson]
+      };
+    }
   };
 
-  //Defaults
-  defaultPerson = angular.extend({
-    income: {},
-    expenses: {},
-    results: {}
-  }, Person);
-
-  previousData = calculatorStorage.getStoredData("household");
-
-  // check if we have old data from "server"
-  if (previousData) {
-    $scope.household = previousData.household;
-  } else {
-    $scope.household = {
-      county: $scope.taxList[0].id,
-      peopleLength: 1,
-      people: [defaultPerson]
-    };
-  }
-
-  $scope.updateTax = function (action) {
+  $scope.updateTax = function () {
     var churchFee = "",
         taxId = $scope.household.county,
         taxObj = "";
@@ -121,6 +123,5 @@ angular.module('app.householdCtrl', [
     calculatorStorage.addDataToStorage(dataToStore);
   };
 
-  taxes.getTaxList();
-
+  $scope.init();
 }]);
