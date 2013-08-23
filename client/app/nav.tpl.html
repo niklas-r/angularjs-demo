@@ -1,9 +1,9 @@
 <div class="navbar">
 	<div class="container">
-		<a href="#/" class="navbar-brand">Bank</a>
+		<a href="/" class="navbar-brand">Budgetkalkylatorn</a>
 		<ul class="nav navbar-nav">
 			<li ng-repeat="link in mainNavLinks" ng-class="{'active': link.href == activePageSection.href}">
-				<a href="#{{ link.href }}">{{ link.title }}</a>
+				<a href="{{ link.href }}">{{ link.title }}</a>
 			</li>
 		</ul>
 	</div>
@@ -11,7 +11,7 @@
 <div ng-show="subNavLinks" class="container">
 	<ul class="nav nav-tabs">
 		<li ng-repeat="link in subNavLinks" ng-class="{'active': link.href == activePage.href}">
-			<a href="#{{ link.href }}">{{ link.title }}</a>
+			<a href="{{ link.href }}">{{ link.title }}</a>
 		</li>
 	</ul>
 </div>

@@ -1,1 +1,72 @@
-<p>Income!</p>
+<div ng-show="checkForData()==false">
+	<h4>Var god fyll i uppgifter angående hushåll först.</h4>
+	<a href="/calculator/household" class="btn btn-default">&larr; Hushållsuppgifter</a>
+</div>
+<form name="incomeForm" class="form-medium" ng-show="checkForData()">
+	<p>Här fyller du i dina inkomster före skatt.</p>
+	<div class="row">
+		<div class="col col-lg-3">
+			<h4>Ange inkomster per månad</h4>
+			<ul class="form-list	">
+				<li><h5 class="form-title">Lön (kr/mån)</h5></li>
+				<li><h5 class="form-title">Förmåner (kr/mån)</h5></li>
+				<li><h5 class="form-title">Pension (kr/mån)</h5></li>
+				<li><h5 class="form-title">Sjukersättning (kr/mån)</h5></li>
+				<li><h5 class="form-title">Övriga skattefria inkomster (kr/mån)</h5></li>
+			</ul>
+		</div>
+		<div class="col col-lg-9">
+			<div class="row">
+				<div ng-repeat="person in peopleData.household.people">
+					<div ng-form="personForm">
+						<div class="col" ng-class="getColumnClass()">
+							<h4>{{person.firstName}} {{person.lastName}}</h4>
+							<!-- salary input -->
+							<div class="control-group" ng-class="{'has-error': personForm.salary.$dirty && personForm.salary.$invalid, 'has-success': personForm.salary.$dirty && personForm.salary.$valid}">
+								<div class="controls">
+									<input type="text" class="input-with-feedback" ng-change="updateIncome(person, person.tax)" name="salary" ng-model="person.income.salary" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<label class="control-label" ng-show="personForm.salary.$dirty && personForm.salary.$error.pattern">Endast siffror är tillåtna.</label>
+								</div>
+							</div>
+							<!-- /salary input -->
+							<!-- benefits input -->
+							<div class="control-group" ng-class="{'has-error': personForm.benefits.$dirty && personForm.benefits.$invalid, 'has-success': personForm.benefits.$dirty && personForm.benefits.$valid}">
+								<div class="controls">
+									<input type="text" class="input-with-feedback" ng-change="updateIncome(person, person.tax)" name="benefits" ng-model="person.income.benefits" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<label class="control-label" ng-show="personForm.benefits.$dirty && personForm.benefits.$error.pattern">Endast siffror är tillåtna.</label>
+								</div>
+							</div>
+							<!-- /benefits input -->
+							<!-- pension input -->
+							<div class="control-group" ng-class="{'has-error': personForm.pension.$dirty && personForm.pension.$invalid, 'has-success': personForm.pension.$dirty && personForm.pension.$valid}">
+								<div class="controls">
+									<input type="text" class="input-with-feedback" ng-change="updateIncome(person, person.tax)" name="pension" ng-model="person.income.pension" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<label class="control-label" ng-show="personForm.pension.$dirty && personForm.pension.$error.pattern">Endast siffror är tillåtna.</label>
+								</div>
+							</div>
+							<!-- /pension input -->
+							<!-- sick input -->
+							<div class="control-group" ng-class="{'has-error': personForm.sick.$dirty && personForm.sick.$invalid, 'has-success': personForm.sick.$dirty && personForm.sick.$valid}">
+								<div class="controls">
+									<input type="text" class="input-with-feedback" ng-change="updateIncome(person, person.tax)" name="sick" ng-model="person.income.sick" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<label class="control-label" ng-show="personForm.sick.$dirty && personForm.sick.$error.pattern">Endast siffror är tillåtna.</label>
+								</div>
+							</div>
+							<!-- /sick input -->
+							<!-- other input -->
+							<div class="control-group" ng-class="{'has-error': personForm.other.$dirty && personForm.other.$invalid, 'has-success': personForm.other.$dirty && personForm.other.$valid}">
+								<div class="controls">
+									<input type="text" class="input-with-feedback" ng-change="updateIncome(person, person.tax)" name="other" ng-model="person.income.other" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<label class="control-label" ng-show="personForm.other.$dirty && personForm.other.$error.pattern">Endast siffror är tillåtna.</label>
+								</div>
+							</div>
+							<!-- /other input -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<a href="/calculator/household" class="pull-left btn btn-large btn-primary">Tillbaka</a>
+	<a href="/calculator/expenses" class="pull-right btn btn-large btn-primary">Nästa steg</a>
+</form>

@@ -23,7 +23,8 @@ app.use(lessMiddleware({
 app.use(express.compress());
 app.use(express.static(path.join(__dirname, config.server.clientRoot)));
 app.use(function(req, res, next) {
-  res.send(404); // If we get here then the request for a static file is invalid
+  res.sendfile('index.html', { root: config.server.clientRoot });
+  // res.send(404); // If we get here then the request for a static file is invalid
 });
 
 // General environment settings

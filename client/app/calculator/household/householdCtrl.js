@@ -1,3 +1,4 @@
+'use strict';
 angular.module('app.householdCtrl', [
   'services.taxes',
   'services.calculatorStorage'
@@ -5,38 +6,44 @@ angular.module('app.householdCtrl', [
 .controller('householdCtrl', ['$scope', 'taxes', 'calculatorStorage', function ($scope, taxes, calculatorStorage) {
   var _people, cutPerson, pastePerson, Person, defaultPerson, taxList, personTax, previousData;
 
-  // Array for storing removed people
-  _people = [];
+  $scope.init = function () {
+    // Array for storing removed people
+    _people = [];
 
-  $scope.taxList = taxes.getTaxList();
+    $scope.taxList = taxes.getTaxList();
 
-  // Person Construct
-  Person = {
-    firstName: "",
-    lastName: "",
-    sex: "male",
-    birthYear: "",
-    churchFee: "true",
-    tax: $scope.taxList[0].churchTax
+    // Person Construct
+    Person = {
+      firstName: "",
+      lastName: "",
+      sex: "male",
+      birthYear: "",
+      churchFee: "true",
+      tax: $scope.taxList[0].churchTax
+    };
+
+    //Defaults
+    defaultPerson = angular.extend({
+      income: {},
+      expenses: {},
+      results: {}
+    }, Person);
+
+    previousData = calculatorStorage.getStoredData("household");
+
+    // check if we have old data from "server"
+    if (previousData) {
+      $scope.household = previousData.household;
+    } else {
+      $scope.household = {
+        county: $scope.taxList[0].id,
+        peopleLength: 1,
+        people: [defaultPerson]
+      };
+    }
   };
 
-  //Defaults
-  defaultPerson = angular.extend({}, Person);
-
-  previousData = calculatorStorage.getStoredData("household");
-
-  // check if we have old data from "server"
-  if (previousData) {
-    $scope.household = previousData.data;
-  } else {
-    $scope.household = {
-      county: $scope.taxList[0].id,
-      peopleLength: 1,
-      people: [defaultPerson]
-    };
-  }
-
-  $scope.updateTax = function (action) {
+  $scope.updateTax = function () {
     var churchFee = "",
         taxId = $scope.household.county,
         taxObj = "";
@@ -62,7 +69,6 @@ angular.module('app.householdCtrl', [
   };
 
   $scope.updatePeople = function (value) {
-
     var len = $scope.household.people.length;
 
     value = parseInt(value, 10);
@@ -80,11 +86,14 @@ angular.module('app.householdCtrl', [
         if (_people.length === 0) {
           // append new person
           person = angular.extend({
-            tax:$scope.taxList[$scope.household.county].churchTax
-          },Person);
+            income: {},
+            expenses: {},
+            results: {},
+            tax: $scope.taxList[$scope.household.county].churchTax
+          }, Person);
 
         } else {
-          // grab first object from _people and append 
+          // grab first object from _people and append
           person = _people.splice(0, 1)[0];
         }
 
@@ -109,13 +118,11 @@ angular.module('app.householdCtrl', [
 
   $scope.storeData = function (data) {
     var dataToStore = {
-      name: "household",
-      data: data
+      household: data
     };
 
     calculatorStorage.addDataToStorage(dataToStore);
   };
 
-  taxes.getTaxList();
-
+  $scope.init();
 }]);

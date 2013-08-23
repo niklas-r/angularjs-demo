@@ -2,13 +2,13 @@
 <html lang="en" ng-app="app">
 <head>
 	<meta charset="UTF-8">
-	<title>Angluar app</title>
-	<link rel="stylesheet" href="stylesheets/css/main.css">
+	<title>Budgetkalkylatorn</title>
+	<link rel="stylesheet" href="/stylesheets/css/main.css">
 </head>
 <body ng-controller="appCtrl">
 
-	<div ng-include="'app/nav.tpl.html'"></div>
-	
+	<div ng-include="'/app/nav.tpl.html'"></div>
+
 	<div class="container">
 		<h1>{{ activePage.title }}</h1>
 		<hr>
@@ -16,29 +16,35 @@
 	</div>
 
 	<!-- vendor script -->
-	<script src="vendor/angular.min.js"></script>
+	<script src="/vendor/jquery.js"></script>
+	<script src="/vendor/highcharts.js"></script>
+	<script src="/vendor/angular.min.js"></script>
 
 	<!-- app scripts -->
-	<!-- common script-->
-	<script src="common/services/calculatorStorage.js"></script>
-	<script src="common/services/taxes.js"></script>
-	<script src="common/services/navigation.js"></script>
-	<script src="common/services/pages.js"></script>
-	
+	<!-- services -->
+	<script src="/common/services/currency.js"></script>
+	<script src="/common/services/calculatorStorage.js"></script>
+	<script src="/common/services/taxes.js"></script>
+	<script src="/common/services/navigation.js"></script>
+	<script src="/common/services/pages.js"></script>
+
+	<!-- directives -->
+	<script src="/common/directives/chart.js"></script>
+
 	<!-- calculator section-->
-	<script src="app/calculator/household/householdCtrl.js"></script>
-	<script src="app/calculator/income/incomeCtrl.js"></script>
-	<script src="app/calculator/expenses/expensesCtrl.js"></script>
-	<script src="app/calculator/result/resultCtrl.js"></script>
-	<script src="app/calculator/calculatorCtrl.js"></script>
+	<script src="/app/calculator/household/householdCtrl.js"></script>
+	<script src="/app/calculator/income/incomeCtrl.js"></script>
+	<script src="/app/calculator/expenses/expensesCtrl.js"></script>
+	<script src="/app/calculator/result/resultCtrl.js"></script>
+	<script src="/app/calculator/calculatorCtrl.js"></script>
 
 	<!-- about section-->
-	<script src="app/about/aboutCtrl.js"></script>
+	<script src="/app/about/aboutCtrl.js"></script>
 
 	<!-- home section -->
-	<script src="app/home/homeCtrl.js"></script>
+	<script src="/app/home/homeCtrl.js"></script>
 
 	<!-- run app -->
-	<script src="app/app.js"></script>
+	<script src="/app/app.js"></script>
 </body>
 </html>

@@ -1,1 +1,63 @@
-<p>Expenses!</p>
+<div ng-show="checkForData()==false">
+	<h4>Var god fyll i uppgifter angående hushåll först.</h4>
+	<a href="/calculator/household" class="btn btn-default">&larr; Hushållsuppgifter</a>
+</div>
+<form name="expensesForm" class="form-medium" ng-show="checkForData()">
+	<p>Här fyller du i dina utgifter.</p>
+	<div class="row">
+		<div class="col col-lg-3">
+			<h4>Ange utgifter per månad</h4>
+			<ul class="form-list	">
+				<li><h5 class="form-title">Boende</h5></li>
+				<li><h5 class="form-title">Bil</h5></li>
+				<li><h5 class="form-title">Livsmedel</h5></li>
+				<li><h5 class="form-title">Övrigt</h5></li>
+			</ul>
+		</div>
+		<div class="col col-lg-9">
+			<div class="row">
+				<div ng-repeat="person in peopleData.household.people">
+					<div ng-form="personForm">
+						<div class="col" ng-class="getColumnClass()">
+							<h4>{{person.firstName}} {{person.lastName}}</h4>
+							<!-- living input -->
+							<div class="control-group" ng-class="{'has-error': personForm.living.$dirty && personForm.living.$invalid, 'has-success': personForm.living.$dirty && personForm.living.$valid}">
+								<div class="controls">
+									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person)" name="living" ng-model="person.expenses.living" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<label class="control-label" ng-show="personForm.living.$dirty && personForm.living.$error.pattern">Endast siffror är tillåtna.</label>
+								</div>
+							</div>
+							<!-- /living input -->
+							<!-- car input -->
+							<div class="control-group" ng-class="{'has-error': personForm.car.$dirty && personForm.car.$invalid, 'has-success': personForm.car.$dirty && personForm.car.$valid}">
+								<div class="controls">
+									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person)" name="car" ng-model="person.expenses.car" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<label class="control-label" ng-show="personForm.car.$dirty && personForm.car.$error.pattern">Endast siffror är tillåtna.</label>
+								</div>
+							</div>
+							<!-- /car input -->
+							<!-- food input -->
+							<div class="control-group" ng-class="{'has-error': personForm.food.$dirty && personForm.food.$invalid, 'has-success': personForm.food.$dirty && personForm.food.$valid}">
+								<div class="controls">
+									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person)" name="food" ng-model="person.expenses.food" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<label class="control-label" ng-show="personForm.food.$dirty && personForm.food.$error.pattern">Endast siffror är tillåtna.</label>
+								</div>
+							</div>
+							<!-- /food input -->
+							<!-- other input -->
+							<div class="control-group" ng-class="{'has-error': personForm.other.$dirty && personForm.other.$invalid, 'has-success': personForm.other.$dirty && personForm.other.$valid}">
+								<div class="controls">
+									<input type="text" class="input-with-feedback" ng-change="updateExpenses(person)" name="other" ng-model="person.expenses.other" ng-pattern="/^[0-9]+$/" ng-minlength="1">
+									<label class="control-label" ng-show="personForm.other.$dirty && personForm.other.$error.pattern">Endast siffror är tillåtna.</label>
+								</div>
+							</div>
+							<!-- /other input -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<a href="/calculator/income" class="pull-left btn btn-large btn-primary">Tillbaka</a>
+	<a href="/calculator/result" class="pull-right btn btn-large btn-primary">Nästa steg</a>
+</form>
