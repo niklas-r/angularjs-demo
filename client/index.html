@@ -8,7 +8,7 @@
 <body ng-controller="appCtrl">
 
 	<div ng-include="'/app/nav.tpl.html'"></div>
-	
+
 	<div class="container">
 		<h1>{{ activePage.title }}</h1>
 		<hr>
@@ -21,13 +21,16 @@
 	<script src="/vendor/angular.min.js"></script>
 
 	<!-- app scripts -->
-	<!-- common script-->
+	<!-- services -->
 	<script src="/common/services/currency.js"></script>
 	<script src="/common/services/calculatorStorage.js"></script>
 	<script src="/common/services/taxes.js"></script>
 	<script src="/common/services/navigation.js"></script>
 	<script src="/common/services/pages.js"></script>
-	
+
+	<!-- directives -->
+	<script src="/common/directives/chart.js"></script>
+
 	<!-- calculator section-->
 	<script src="/app/calculator/household/householdCtrl.js"></script>
 	<script src="/app/calculator/income/incomeCtrl.js"></script>

@@ -1,5 +1,5 @@
 'use strict';
-angular.module('app.resultCtrl', [])
+angular.module('app.resultCtrl', ['directive.chart'])
 .controller('resultCtrl', [
   '$scope',
   'calculatorStorage',
@@ -35,7 +35,7 @@ angular.module('app.resultCtrl', [])
         });
       });
 
-      $("#graph").highcharts({
+      $scope.chartConfig = {
         chart: {
           type: 'bar'
         },
@@ -51,7 +51,7 @@ angular.module('app.resultCtrl', [])
           }
         },
         series: graphSeries
-      });
+      };
     }
   }
 ]);
